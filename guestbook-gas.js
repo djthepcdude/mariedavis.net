@@ -1,16 +1,15 @@
-const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzkH3iZGR98A0jbCVrDhlZXQ4E8nkSZyh-CLVvfMEgUF59e1ESQht78tqBCgHrV4WVt/exec";
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbw6c1lmpmznsWdZUTdXe_Wb6QHqVVzlM6JFNh5nefo4l0yL8_QY6M9dnX3ZCx72C5t5ww/exec";
 
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("guestForm");
   const list = document.getElementById("guestList");
 
-  // safety checks
   if (!form) {
-    console.error("guestForm not found in DOM");
+    console.error("guestForm not found");
     return;
   }
   if (!list) {
-    console.error("guestList not found in DOM");
+    console.error("guestList not found");
     return;
   }
 
@@ -32,17 +31,18 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       e.target.reset();
-      await loadGuestbook();
+      await loadGuestbookFromSheets();  // NOTE: new name
     } catch (err) {
-      console.error("Error saving guestbook entry:", err);
-      alert("There was a problem saving your message.");
+      console.error("Error saving entry:", err);
+      alert("Problem saving your message.");
     }
   });
 
-  loadGuestbook();
+  // initial load
+  loadGuestbookFromSheets();  // NOTE: new name
 });
 
-async function loadGuestbook() {
+async function loadGuestbookFromSheets() {
   const out = document.getElementById("guestList");
   if (!out) return;
 
@@ -50,7 +50,7 @@ async function loadGuestbook() {
 
   try {
     const res = await fetch(WEB_APP_URL);
-    const data = await res.json(); // expects JSON array
+    const data = await res.json();
 
     out.innerHTML = "";
 
@@ -68,8 +68,7 @@ async function loadGuestbook() {
       out.innerHTML = "<li>No messages yet. Be the first.</li>";
     }
   } catch (err) {
-    console.error("Error loading guestbook:", err);
+    console.error("Error loading guestbook from Sheets:", err);
     out.innerHTML = "<li>Could not load guestbook.</li>";
   }
 }
-
