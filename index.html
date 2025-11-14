@@ -134,25 +134,63 @@
       <h2 class="text-xl sm:text-2xl font-bold text-rose-700 mb-2">💌 Guestbook</h2>
       <p class="text-gray-700 mb-6">Leave a kind note for Marie!</p>
 
-   <section class="mt-6">
-  <h2 class="text-xl font-semibold mb-2">Guestbook</h2>
-  <iframe
-    src="https://script.google.com/macros/s/1YoLsasP9yWMKiwp6dkrSDJndgAfFfvYdUT18i-54c9PKo1vaxBB3dcnM/exec"
-    style="width:100%; max-width:600px; height:500px; border:none; border-radius:1rem; background:white;"
-  ></iframe>
-</section>
+<form
+  name="gform"
+  id="gform"
+  enctype="text/plain"
+  action="https://docs.google.com/forms/d/e/1FAIpQLSdKho7nOdZl6p2S38j5vWIr-gbjkXQb6R4W1XFIa_hEo7VcHw/formResponse?"
+  target="hidden_iframe"
+  onsubmit="submitted=true;"
+>
 
-  <!-- Footer -->
-  <footer class="text-center text-rose-700 mt-6 pb-8 text-sm">
-    <p>find me online 👇🏽 bein’ cute ✨</p>
-    <div class="flex justify-center gap-6 mt-4 text-3xl">
-      <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"
-         class="hover:scale-110 transition-transform">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"
-             class="w-7 h-7 text-pink-500 hover:text-pink-400">
-          <path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2zm0 1.5A4.25 4.25 0 0 0 3.5 7.75v8.5A4.25 4.25 0 0 0 7.75 20.5h8.5a4.25 4.25 0 0 0 4.25-4.25v-8.5A4.25 4.25 0 0 0 16.25 3.5h-8.5zM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 1.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7zm5.75-.88a.88.88 0 1 1-1.76 0 .88.88 0 0 1 1.76 0z"/>
-        </svg>
-      </a>
+  <!-- Name -->
+  <label for="entry.1008365156" class="aterisk_after">Name</label>
+  <input
+    class="form-element short"
+    type="text"
+    name="entry.1008365156"
+    id="entry.1008365156"
+    placeholder="John Doe."
+    style="background:#5EC6C8;"
+    required
+  >
+
+  <!-- Email / GitHub username -->
+  <label for="entry.2012867003">GitHub Username</label>
+  <input
+    class="form-element short"
+    type="text"
+    name="entry.2012867003"
+    id="entry.2012867003"
+    placeholder="MarketingPip"
+    style="background:#5EC6C8;"
+  >
+
+  <!-- Message -->
+  <label for="entry.1854823009" class="max-length">Guestbook Entry</label>
+  <textarea
+    class="form-element"
+    name="entry.1854823009"
+    id="entry.1854823009"
+    rows="5"
+    cols="30"
+    maxlength="300"
+    oninvalid="this.setCustomValidity('You must sign the guestbook')"
+    oninput="this.setCustomValidity('')"
+    placeholder="Enter Your Message Here"
+    required
+  ></textarea>
+
+  <!-- reCAPTCHA v2 (your real site key) -->
+  <label for="g-recaptcha" class="aterisk_after">Captcha</label>
+  <div class="g-recaptcha" data-sitekey="6LfWMAwsAAAAAPFUVOc7ENXNDm7z5iTrhSlGhdpq"></div>
+
+  <input class="form-button" type="submit" value="Submit">
+  <input class="form-button" type="reset" value="Reset Form">
+</form>
+
+<iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+
 
       <a href="https://fb.mariedavis.net" target="_blank" rel="noopener noreferrer"
          aria-label="Facebook at fb.mariedavis.net"
@@ -276,6 +314,7 @@
 <script src="guestbook-gas.js"></script>
 </body>
 </html>
+
 
 
 
