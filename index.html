@@ -92,6 +92,43 @@
       position: fixed; inset: 0; display: none; z-index: 40;
       width: 100vw; height: 100vh; pointer-events: none;
     }
+/* Set up the game board as a 4-column grid */
+.game-board {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2vw;
+  margin: auto;
+}
+  
+/* General appearance of cards */ 
+.card { background: #607D8B;
+  height: 22vw; 
+  border-radius: 10px; 
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  font-size: 30px; 
+  cursor: pointer; 
+  transform-style: preserve-3d; 
+  transition: transform 0.7s; }
+
+/* Flipped or matched cards */ 
+.card.flipped { 
+  transform: rotateY(180deg); 
+  background: #546E7A; 
+}
+
+/* Reset button positioned at the bottom right */ 
+.reset { 
+  position: fixed; 
+  bottom: 3px; 
+  right: 3px; 
+  background: #607D8B; 
+  color: #FFFFFF;
+  border: none; 
+  padding: 10px; 
+  border-radius: 6px; 
+} 
   </style>
 </head>
 
@@ -131,145 +168,8 @@
 <html>
 <head>
 <title>Codeflash - Samples</title>
-<style>
-/* Set up the game board as a 4-column grid */
-.game-board {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 2vw;
-  margin: auto;
-}
-  
-/* General appearance of cards */ 
-.card { background: #607D8B;
-  height: 22vw; 
-  border-radius: 10px; 
-  display: flex; 
-  justify-content: center; 
-  align-items: center; 
-  font-size: 30px; 
-  cursor: pointer; 
-  transform-style: preserve-3d; 
-  transition: transform 0.7s; }
-
-/* Flipped or matched cards */ 
-.card.flipped { 
-  transform: rotateY(180deg); 
-  background: #546E7A; 
-}
-
-/* Reset button positioned at the bottom right */ 
-.reset { 
-  position: fixed; 
-  bottom: 3px; 
-  right: 3px; 
-  background: #607D8B; 
-  color: #FFFFFF;
-  border: none; 
-  padding: 10px; 
-  border-radius: 6px; 
-} 
-</style>
-</head>
-<body><!-- Game board container --><div class="game-board" id="board"></div>
-<button class="reset" onclick="resetGame()">Reset Game</button>
-<script>
-// Array of emojis to be used in the game
-const emojis = ['🐶', '🐱', '🐻', '🐼', '🐧', '🦊', '🐯', '🐹'];
-
-// Duplicate each emoji to create pairs
-const cards = [...emojis, ...emojis]; 
-let flippedCards = []; // Stores the currently flipped cards
-let matched = 0; // Counter for matched pairs
-
-// Function to initialize the game board
-function createBoard() {
-  const board = document.getElementById('board');
-  board.innerHTML = ''; // Clear the board before starting
-  flippedCards = [];
-  matched = 0;
-  cards.sort(() => Math.random() - 0.5); // Shuffle the cards randomly
-
-  // Create cards and add them to the board
-  cards.forEach(emoji => {
-    const card = document.createElement('div');
-    card.className = 'card';
-    card.dataset.emoji = emoji; // Store emoji data in dataset
-    card.innerHTML = '?'; // Default back face of the card
-    card.onclick = flipCard; // Attach event listener for flipping
-    board.appendChild(card);
-  });
-}
-
-// Function to flip a card
-function flipCard() {
-  // Allow flipping only if less than 2 cards are flipped and the card is not already flipped
-  if (flippedCards.length < 2 && !this.classList.contains('flipped')) {
-    this.classList.add('flipped'); // Add flipped class
-    this.innerHTML = this.dataset.emoji; // Show the emoji
-    flippedCards.push(this); // Store the flipped card
-  
-    // If two cards are flipped, check for a match
-    if (flippedCards.length === 2) checkMatch();
-  }
-}
-
-// Function to check if the flipped cards match
-function checkMatch() {
-  const [card1, card2] = flippedCards;
-
-  if (card1.dataset.emoji === card2.dataset.emoji) {
-    // If cards match, increase match count and reset flippedCards array
-    matched += 2;
-    flippedCards = [];
-  
-    // If all cards are matched, show a winning message
-    if (matched === cards.length) alert('You won! 🎉');
-    } else {
-    // If not a match, flip them back after a delay
-      setTimeout(() => {
-      card1.classList.remove('flipped');
-      card2.classList.remove('flipped');
-      card1.innerHTML = '?';
-      card2.innerHTML = '?';
-      flippedCards = [];
-    }, 1000);
-  }
-}
-
-// Function to reset the game board and start over
-function resetGame() {
-  createBoard();
-}
-
-createBoard(); // Start the game when the page loads
-</script>
-
-    <!-- Guestbook -->
-    <section id="guestbook" class="max-w-3xl mx-auto px-0 sm:px-6 py-12 text-center">
-      <h2 class="text-xl sm:text-2xl font-bold text-rose-700 mb-2">💌 Guestbook</h2>
-      <p class="text-gray-700 mb-6">Leave a kind note for Marie!</p>
-
-<form
-  name="gform"
-  id="gform"
-  enctype="text/plain"
-  action="https://docs.google.com/forms/d/e/1FAIpQLSdKho7nOdZl6p2S38j5vWIr-gbjkXQb6R4W1XFIa_hEo7VcHw/formResponse?"
-  target="hidden_iframe"
-  onsubmit="submitted=true;"
->
-
-  <!-- Name -->
-  <label for="entry.1008365156" class="aterisk_after">Name</label>
-  <input
-    class="form-element short"
-    type="text"
-    name="entry.1008365156"
-    id="entry.1008365156"
-    placeholder="John Doe."
-    style="background:#5EC6C8;"
-    required
-  >
+!-- Game board container --><div class="game-board" id="board"></div>
+<button class="
 
   <!-- Email / GitHub username -->
   <label for="entry.2012867003">GitHub Username</label>
@@ -516,7 +416,77 @@ function resetGame() {
 }
 
 createBoard(); // Start the game when the page loads
+
 </script>
+onclick="resetGame()">Reset Game</button>
+<script>
+// Array of emojis to be used in the game
+const emojis = ['🐶', '🐱', '🐻', '🐼', '🐧', '🦊', '🐯', '🐹'];
+
+// Duplicate each emoji to create pairs
+const cards = [...emojis, ...emojis]; 
+let flippedCards = []; // Stores the currently flipped cards
+let matched = 0; // Counter for matched pairs
+
+// Function to initialize the game board
+function createBoard() {
+  const board = document.getElementById('board');
+  board.innerHTML = ''; // Clear the board before starting
+  flippedCards = [];
+  matched = 0;
+  cards.sort(() => Math.random() - 0.5); // Shuffle the cards randomly
+
+  // Create cards and add them to the board
+  cards.forEach(emoji => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.dataset.emoji = emoji; // Store emoji data in dataset
+    card.innerHTML = '?'; // Default back face of the card
+    card.onclick = flipCard; // Attach event listener for flipping
+    board.appendChild(card);
+  });
+}
+
+// Function to flip a card
+function flipCard() {
+  // Allow flipping only if less than 2 cards are flipped and the card is not already flipped
+  if (flippedCards.length < 2 && !this.classList.contains('flipped')) {
+    this.classList.add('flipped'); // Add flipped class
+    this.innerHTML = this.dataset.emoji; // Show the emoji
+    flippedCards.push(this); // Store the flipped card
+  
+    // If two cards are flipped, check for a match
+    if (flippedCards.length === 2) checkMatch();
+  }
+}
+
+// Function to check if the flipped cards match
+function checkMatch() {
+  const [card1, card2] = flippedCards;
+
+  if (card1.dataset.emoji === card2.dataset.emoji) {
+    // If cards match, increase match count and reset flippedCards array
+    matched += 2;
+    flippedCards = [];
+  
+    // If all cards are matched, show a winning message
+    if (matched === cards.length) alert('You won! 🎉');
+    } else {
+    // If not a match, flip them back after a delay
+      setTimeout(() => {
+      card1.classList.remove('flipped');
+      card2.classList.remove('flipped');
+      card1.innerHTML = '?';
+      card2.innerHTML = '?';
+      flippedCards = [];
+    }, 1000);
+  }
+}
+
+// Function to reset the game board and start over
+function resetGame() {
+  createBoard();
+}
 
   <!-- App scripts -->
 <script src="app.js"></script>
