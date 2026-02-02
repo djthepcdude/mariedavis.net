@@ -43,25 +43,52 @@
       pointer-events: none;
     }
 
-    .embed-wrap {
-      width: 100%;
-      max-width: 1200px;
-      margin: 2rem auto;
-      border-radius: 16px;
-      overflow: hidden;
-      background: #0e0e11;
-      box-shadow:
-        0 10px 40px rgba(0,0,0,.35),
-        inset 0 0 0 1px rgba(255,255,255,.04);
-    }
+    /* Main embed container */
+.embed-wrap {
+  width: 100%;
+  max-width: 1200px;       /* caps width on desktop */
+  margin: 2rem auto;       /* center horizontally */
+  padding: 1.5rem;         /* inner spacing */
+  border-radius: 16px;     /* smooth rounded corners */
+  background: #f8f4f9;     /* subtle background */
+  box-shadow:
+    0 10px 40px rgba(0,0,0,0.25),
+    inset 0 0 0 1px rgba(0,0,0,0.03);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
 
-    .embed-wrap iframe {
-      width: 100%;
-      height: 80vh;
-      border: none;
-      display: block;
-    }
+/* Hover / interactive effect */
+.embed-wrap:hover {
+  transform: scale(1.02);
+  box-shadow:
+    0 12px 45px rgba(0,0,0,0.35),
+    inset 0 0 0 1px rgba(0,0,0,0.05);
+}
 
+/* Embedded media (image, video, or content) */
+.embed-wrap > * {
+  width: 100%;
+  height: auto;             /* maintain aspect ratio */
+  border-radius: 12px;      /* match container corners */
+  display: block;
+}
+
+/* Example text inside embed */
+.embed-wrap p, 
+.embed-wrap h2, 
+.embed-wrap h3 {
+  margin: 0.5rem 0;
+  line-height: 1.5;
+  text-align: center;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .embed-wrap {
+    padding: 1rem;
+    border-radius: 12px;
+  }
+}
     @media (max-width: 768px) {
       .embed-wrap iframe { height: 70vh; }
     }
@@ -126,14 +153,14 @@
     “be kind, stay high, and love loud 💚”
   </blockquote>
 
- <iframe
-  src="https://REC0DDED88-URL-HERE"
-  loading="lazy"
-  referrerpolicy="no-referrer-when-downgrade"
-  sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-top-navigation-by-user-activation"
-  allow="autoplay; encrypted-media; fullscreen"
-  title="Embedded Content">
-</iframe>
+<div class="embed-wrap flex items-center justify-center">
+  <a href="https://REC0DDED88-URL-HERE"
+     target="_blank"
+     rel="noopener"
+     class="text-lg font-bold text-emerald-500 hover:underline">
+    Tap to open 💖
+  </a>
+</div>
 
 </main>
 
