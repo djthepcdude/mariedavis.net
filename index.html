@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Marie Davis</title>
 
 <style>
@@ -11,20 +11,21 @@
   --accent: #e11d48;
   --soft: #fb7185;
   --text: #3f3f46;
+  --emerald: #059669;
+  --pink: #db2777;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 body {
   margin: 0;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   background: var(--bg);
   color: var(--text);
   overflow-x: hidden;
-}
-
-main {
-  max-width: 900px;
-  margin: auto;
-  padding: 2rem 1.25rem 6rem;
+  line-height: 1.6;
 }
 
 /* Parallax background */
@@ -35,10 +36,68 @@ main {
     radial-gradient(circle at 20% 30%, rgba(225,29,72,.08), transparent 40%),
     radial-gradient(circle at 80% 70%, rgba(251,113,133,.08), transparent 40%);
   z-index: -1;
-  transform: translateY(0);
 }
 
-/* Mood card */
+/* Emoji rain */
+.emoji-rain {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  overflow: hidden;
+}
+
+.emoji {
+  position: absolute;
+  top: -50px;
+  animation: fall linear forwards;
+  pointer-events: none;
+}
+
+@keyframes fall {
+  to {
+    top: 100vh;
+    transform: rotate(360deg);
+  }
+}
+
+/* Container */
+main {
+  max-width: 900px;
+  margin: auto;
+  padding: 2rem 1.25rem 3rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* Header */
+.header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.header h1 {
+  font-size: 2.5rem;
+  color: var(--accent);
+  margin: 0 0 1rem;
+  font-weight: 700;
+}
+
+.header .subtitle {
+  font-size: 1.1rem;
+  color: var(--pink);
+  margin: 0.5rem 0;
+  font-weight: 500;
+}
+
+.header .bio {
+  max-width: 600px;
+  margin: 1.5rem auto;
+  font-size: 1rem;
+  color: var(--text);
+}
+
+/* Cards */
 .card {
   background: white;
   border-radius: 18px;
@@ -47,27 +106,406 @@ main {
   margin-bottom: 2rem;
 }
 
+/* Mood Check-In */
 .mood {
   font-size: 1.25rem;
   font-weight: 600;
+  color: var(--text);
+  margin-bottom: 0.75rem;
 }
 
-/* Compliment */
 .compliment {
-  margin-top: .75rem;
   font-style: italic;
   color: #6b7280;
+  margin-bottom: 1.25rem;
 }
 
 /* Bless button */
 .bless {
-  margin-top: 1.25rem;
   display: inline-flex;
   align-items: center;
   gap: .5rem;
   background: var(--accent);
   color: white;
   padding: .6rem 1rem;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.bless:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(225,29,72,.3);
+}
+
+.bless:active {
+  transform: translateY(0);
+}
+
+.bless-count {
+  font-size: .85rem;
+  opacity: .85;
+}
+
+/* Floating heart */
+.heart {
+  position: fixed;
+  font-size: 20px;
+  pointer-events: none;
+  animation: floatUp 1.4s ease-out forwards;
+  z-index: 10000;
+}
+
+@keyframes floatUp {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-120px) scale(1.4);
+  }
+}
+
+/* Affirmation */
+.affirmation {
+  font-family: 'Brush Script MT', cursive;
+  color: var(--emerald);
+  font-size: 1.3rem;
+  text-align: center;
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background: rgba(255,255,255,0.6);
+  border-radius: 12px;
+}
+
+/* Rec0deD Card */
+.rec-card {
+  position: relative;
+  margin: 3rem auto;
+  padding: 1.5rem;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #ffd6e8, #eafff4);
+  overflow: hidden;
+  transition: transform .25s ease, box-shadow .25s ease;
+  text-decoration: none;
+  display: block;
+  animation: pulseGlow 4s infinite;
+}
+
+.rec-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 20px 50px rgba(225,29,72,.2);
+}
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 15px 40px rgba(225,29,72,.15); }
+  50% { box-shadow: 0 20px 60px rgba(251,113,133,.25); }
+}
+
+.rec-card img {
+  width: 100%;
+  border-radius: 14px;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.rec-caption {
+  font-weight: bold;
+  color: var(--emerald);
+  font-size: 1.1rem;
+  text-align: center;
+  margin: 0;
+}
+
+/* GIF Wall Section */
+.gif-section {
+  margin-top: 3rem;
+}
+
+.gif-section h3 {
+  font-size: 1.4rem;
+  color: var(--accent);
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.gif-wall {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.gif-wall img {
+  width: 180px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0,0,0,.25);
+  transition: transform .25s ease;
+  cursor: pointer;
+}
+
+.gif-wall img:hover {
+  transform: scale(1.08);
+}
+
+.gif-wall p {
+  color: var(--pink);
+  font-weight: bold;
+  width: 100%;
+  text-align: center;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  font-size: .85rem;
+  color: #6b7280;
+  margin-top: 4rem;
+  padding: 2rem 1rem;
+  user-select: none;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+footer:hover {
+  color: var(--accent);
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .header h1 {
+    font-size: 2rem;
+  }
+  
+  .gif-wall img {
+    width: 150px;
+    height: 150px;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="parallax" id="parallax"></div>
+<div class="emoji-rain" id="emoji-rain"></div>
+
+<main>
+  <!-- Header -->
+  <div class="header">
+    <h1>Marie Davis</h1>
+    <p class="subtitle">oops 😅 i made a website! it's kinda cute tho 💨💅🏽</p>
+    <p class="subtitle">i got distracted rollin' up 😂 so check back soon boo ✨</p>
+    <p class="bio">
+      hey i'm marie 🩷 mixed girl from south park seattle who loves art,
+      plants, family, and random late-night laughs.
+    </p>
+  </div>
+
+  <!-- Affirmation -->
+  <blockquote class="affirmation" id="affirmation">
+    ✨ loading good vibes... ✨
+  </blockquote>
+
+  <!-- Mood Check-In Card -->
+  <div class="card">
+    <div class="mood" id="moodText">...</div>
+    <div class="compliment" id="complimentText"></div>
+    <button class="bless" id="blessBtn">
+      💖 send love
+      <span class="bless-count" id="blessCount">0</span>
+    </button>
+  </div>
+
+  <!-- Rec0deD Preview Card -->
+  <a href="https://www.rec0ded88.com" target="_blank" rel="noopener" class="rec-card">
+    <img src="/rec0ded88-preview.png" alt="Rec0deD:88 preview" onerror="this.style.display='none'">
+    <p class="rec-caption" id="rec-caption">
+      Retro games. Loud nostalgia. Internet chaos 🎮✨
+    </p>
+  </a>
+
+  <!-- GIF Wall -->
+  <section class="gif-section">
+    <h3>current mood rn 💅🏽💨</h3>
+    <div class="gif-wall" id="gif-wall">
+      <p>loading chaos...</p>
+    </div>
+  </section>
+
+</main>
+
+<footer id="footer">
+  <p>made with intention<br>
+  made with love, laughs & chaos 💨<br>
+  my ride-or-die, DJ 💋</p>
+  <p style="margin-top: 1rem;">mariedavis.net © 2025</p>
+</footer>
+
+<script>
+/* =========================
+   Mood Check-In
+========================= */
+const moodText = document.getElementById('moodText');
+const hour = new Date().getHours();
+
+if (hour < 11) {
+  moodText.textContent = 'coffee first. thoughts later ☕';
+} else if (hour < 18) {
+  moodText.textContent = 'somewhere between productive & distracted 😅';
+} else {
+  moodText.textContent = 'every bad idea starts after midnight 💨';
+}
+
+/* =========================
+   Compliments
+========================= */
+const compliments = [
+  'you look good today btw',
+  'you're not behind. you're early.',
+  'whoever raised you did something right',
+  'you bring a calm people notice',
+  'you're allowed to take up space'
+];
+
+const complimentText = document.getElementById('complimentText');
+complimentText.textContent = compliments[Math.floor(Math.random() * compliments.length)];
+
+/* =========================
+   Tap to Bless
+========================= */
+const blessBtn = document.getElementById('blessBtn');
+const blessCountEl = document.getElementById('blessCount');
+let blessCount = Number(localStorage.getItem('blessCount')) || 0;
+blessCountEl.textContent = blessCount;
+
+blessBtn.addEventListener('click', (e) => {
+  blessCount++;
+  localStorage.setItem('blessCount', blessCount);
+  blessCountEl.textContent = blessCount;
+
+  const heart = document.createElement('div');
+  heart.className = 'heart';
+  heart.textContent = '💖';
+  heart.style.left = e.clientX + 'px';
+  heart.style.top = e.clientY + 'px';
+  document.body.appendChild(heart);
+
+  setTimeout(() => heart.remove(), 1400);
+});
+
+/* =========================
+   Soft Parallax Drift
+========================= */
+const parallax = document.getElementById('parallax');
+window.addEventListener('scroll', () => {
+  const y = window.scrollY * 0.02;
+  parallax.style.transform = `translateY(${y}px)`;
+});
+
+/* =========================
+   Easter Egg (Footer Tap)
+========================= */
+let footerTaps = 0;
+const footer = document.getElementById('footer');
+
+footer.addEventListener('click', () => {
+  footerTaps++;
+  if (footerTaps === 5) {
+    footer.innerHTML = '<p style="font-size: 1.2rem; color: var(--accent);">you found the quiet part 💫</p>';
+  }
+});
+
+/* =========================
+   Emoji Rain
+========================= */
+const emojis = ['💖','✨','💨','💅🏽','🩷','💋','😂','🌸','🎮'];
+const rain = document.getElementById('emoji-rain');
+
+setInterval(() => {
+  const e = document.createElement('div');
+  e.className = 'emoji';
+  e.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+  e.style.left = Math.random() * 100 + 'vw';
+  e.style.fontSize = Math.random() * 24 + 18 + 'px';
+  e.style.animationDuration = Math.random() * 4 + 4 + 's';
+  rain.appendChild(e);
+  setTimeout(() => e.remove(), 9000);
+}, 300);
+
+/* =========================
+   Affirmation API
+========================= */
+fetch('https://api.quotable.io/random')
+  .then(r => r.json())
+  .then(d => {
+    document.getElementById('affirmation').textContent = '✨ ' + d.content + ' ✨';
+  })
+  .catch(() => {
+    document.getElementById('affirmation').textContent = '✨ stay cute. stay chaotic 💖 ✨';
+  });
+
+/* =========================
+   Rec0deD Rotating Captions
+========================= */
+const captions = [
+  "Retro games. Loud nostalgia. Internet chaos 🎮✨",
+  "Old-school web energy 💻💖",
+  "CRT dreams & late-night vibes 💨",
+  "Click me. You know you want to 😎"
+];
+let captionIndex = 0;
+
+setInterval(() => {
+  captionIndex = (captionIndex + 1) % captions.length;
+  document.getElementById('rec-caption').textContent = captions[captionIndex];
+}, 3500);
+
+/* =========================
+   GIF Wall (Tenor API)
+========================= */
+const gifWall = document.getElementById('gif-wall');
+const TENOR_KEY = 'AIzaSyAyimkuYQYF_FXVALexPuGQctUWRURdCYQ'; // Public key
+const vibes = [
+  'stoner vibes',
+  'makeup glow up',
+  'drunk fun',
+  'mom life funny',
+  'pop fashion',
+  'late night chaos',
+  'bad bitch energy'
+];
+
+const query = vibes[Math.floor(Math.random() * vibes.length)];
+
+fetch(`https://tenor.googleapis.com/v2/search?q=${encodeURIComponent(query)}&key=${TENOR_KEY}&limit=6`)
+  .then(r => r.json())
+  .then(d => {
+    gifWall.innerHTML = '';
+    if (d.results && d.results.length > 0) {
+      d.results.forEach(g => {
+        const img = document.createElement('img');
+        img.src = g.media_formats.gif.url;
+        img.alt = 'vibe gif';
+        gifWall.appendChild(img);
+      });
+    } else {
+      gifWall.innerHTML = '<p>chaos sleeping 😴</p>';
+    }
+  })
+  .catch(() => {
+    gifWall.innerHTML = '<p>chaos sleeping 😴</p>';
+  });
+</script>
+
+</body>
+</html>  padding: .6rem 1rem;
   border-radius: 999px;
   border: none;
   cursor: pointer;
