@@ -3,38 +3,18 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-
   <title>Marie Davis — Joy in Every Moment</title>
   <meta name="description" content="Marie Davis — mom, maker, and bringer of joy. A tiny corner of the web full of color, kindness, and everyday wins.">
 
-  <!-- Content Security Policy -->
-  <meta http-equiv="Content-Security-Policy" content="
-    default-src 'self';
-    img-src 'self' data: https:;
-    style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.tailwindcss.com https://cdn.jsdelivr.net;
-    script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com;
-    connect-src 'self'
-      https://script.google.com
-      https://script.googleusercontent.com
-      https://www.googleapis.com
-      https://www.google.com
-      https://www.gstatic.com;
-    font-src 'self' https://fonts.gstatic.com;
-  ">
-
-  <!-- Reset + Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/modern-css-reset/dist/reset.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Kalam&family=Dancing+Script&display=swap" rel="stylesheet">
-
-  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Favicon -->
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E💋%3C/text%3E%3C/svg%3E">
 
-  <!-- Embed styles -->
   <style>
+    body { position: relative; overflow-x: hidden; }
     .embed-wrap {
       width: 100%;
       max-width: 1200px;
@@ -44,30 +24,41 @@
       background: #f8f4f9;
       box-shadow: 0 10px 40px rgba(0,0,0,0.25);
       transition: transform 0.2s ease, box-shadow 0.2s ease;
-      position: relative;
       overflow: hidden;
+      position: relative;
     }
     .embed-wrap:hover {
       transform: scale(1.02);
       box-shadow: 0 12px 45px rgba(0,0,0,0.35);
     }
-    .embed-wrap iframe {
-      width: 100%;
-      height: 600px;
-      border: none;
-      border-radius: 16px;
+    #emoji-container {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 5;
+      overflow: hidden;
     }
-    @media (max-width: 768px) {
-      .embed-wrap iframe { height: 400px; }
-      .embed-wrap { padding: 1rem; border-radius: 12px; }
+    .thought-cloud {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: 0;
+      color: #ff69b4;
+      font-size: 18px;
+      opacity: 0.7;
+      pointer-events: none;
+      white-space: nowrap;
+      animation: floatUp 10s linear infinite;
+    }
+    @keyframes floatUp {
+      0% { transform: translateX(-50%) translateY(100vh) rotate(0deg); }
+      100% { transform: translateX(-50%) translateY(-50px) rotate(360deg); }
     }
   </style>
 </head>
-
 <body class="antialiased bg-gradient-to-br from-pink-200 via-rose-100 to-emerald-100 text-gray-800 min-h-screen flex flex-col">
 
-<!-- Full-site falling emojis -->
-<div id="full-emoji-container" style="position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:5;"></div>
+<div id="emoji-container"></div>
 
 <!-- Floating Cash App Button -->
 <a href="https://cash.app/$mayjayme79"
@@ -121,30 +112,26 @@
     family, and random late-night laughs.
   </p>
 
-  <blockquote class="text-emerald-700 font-[Dancing_Script] mt-8 text-xl">
-    “be kind, stay high, and love loud 💚”
+  <blockquote id="quote" class="text-emerald-700 font-[Dancing_Script] mt-8 text-xl">
+    loading affirmations...
   </blockquote>
 
-  <!-- Rec0deD:88 Embed + Cash App inside embed-wrap -->
+  <!-- Rec0deD:88 clickable link -->
   <div class="embed-wrap flex flex-col items-center justify-center">
-    <iframe 
-      src="https://www.rec0ded88.com" 
-      loading="lazy"
-      title="Rec0deD:88 Embedded">
-    </iframe>
-
-    <a href="https://cash.app/$mayjayme79"
-       target="_blank"
-       rel="noopener"
-       style="display:inline-block;margin-top:16px;padding:12px 24px;background:#00d632;color:#000;font-weight:800;border-radius:999px;text-decoration:none;box-shadow:0 0 18px rgba(0,214,50,.7);">
-      💸 Tip $mayjayme79
+    <a href="https://www.rec0ded88.com" target="_blank" rel="noopener"
+       class="text-lg font-bold text-emerald-500 hover:underline">
+       Tap to open Rec0deD:88 💖
     </a>
+  </div>
+
+  <!-- Random GIF Section -->
+  <div id="gif-section" class="mt-8 flex flex-wrap justify-center gap-4">
+    <p class="text-pink-700 font-bold w-full">loading cute chaotic GIFs... 💨</p>
   </div>
 
 </main>
 
 <footer class="text-center text-xs py-6">
-
   <p>
     made with love, laughs & chaos 💨<br>
     my ride-or-die, DJ 💋
@@ -159,46 +146,61 @@
   </a>
 
   <p class="mt-3">mariedavis.net © 2025</p>
-
 </footer>
 
-<canvas id="matrixFx" aria-hidden="true"></canvas>
-
-<!-- Full-site falling emojis script -->
 <script>
-const emojiContainer = document.getElementById('full-emoji-container');
+// --- Falling emojis ---
+const emojiContainer = document.getElementById('emoji-container');
 const emojis = ['💖','✨','💨','💅🏽','🩷','💚','💋','😂','🌸','💎'];
 
 function createEmoji() {
-  const emoji = document.createElement('div');
-  emoji.textContent = emojis[Math.floor(Math.random()*emojis.length)];
-  emoji.style.position = 'absolute';
-  emoji.style.left = Math.random()*100 + '%';
-  emoji.style.fontSize = (Math.random()*28 + 16)+'px';
-  emoji.style.opacity = Math.random()*0.8 + 0.2;
-  emoji.style.zIndex = 5; // behind main content
-  emojiContainer.appendChild(emoji);
-
-  let top = -30;
-  const speed = Math.random()*2 + 1;
-  const drift = (Math.random()-0.5)*1.5;
-
-  function fall(){
-    top += speed;
-    emoji.style.top = top + 'px';
-    emoji.style.left = (parseFloat(emoji.style.left) + drift) + '%';
-    if(top < emojiContainer.offsetHeight + 30){
-      requestAnimationFrame(fall);
-    } else {
-      emoji.remove();
-    }
+  const e = document.createElement('div');
+  e.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+  e.style.position = 'absolute';
+  e.style.left = Math.random()*100 + '%';
+  e.style.fontSize = (Math.random()*28 + 16)+'px';
+  e.style.opacity = Math.random()*0.8 + 0.2;
+  emojiContainer.appendChild(e);
+  let pos = -30;
+  const speed = Math.random()*1.5 + 0.5;
+  function fall() {
+    pos += speed;
+    e.style.top = pos + 'px';
+    if(pos < window.innerHeight + 30) requestAnimationFrame(fall);
+    else e.remove();
   }
   fall();
 }
+setInterval(createEmoji, 300);
 
-// spawn an emoji every 200ms for full-site effect
-setInterval(createEmoji, 200);
+// --- Random AI quote ---
+fetch('https://api.quotable.io/random')
+  .then(res=>res.json())
+  .then(data=>{
+    document.getElementById('quote').textContent = `✨ ${data.content} ✨`;
+  })
+  .catch(()=>{document.getElementById('quote').textContent = '💖 stay chaotic & cute 💖';});
+
+// --- Random GIFs via Tenor ---
+const TENOR_KEY = 'LIVDSRZULELA'; // free public key
+const gifSection = document.getElementById('gif-section');
+
+fetch(`https://g.tenor.com/v1/random?q=fun,cute,chaotic&key=${TENOR_KEY}&limit=4`)
+  .then(res => res.json())
+  .then(data => {
+    gifSection.innerHTML = '';
+    data.results.forEach(item => {
+      const img = document.createElement('img');
+      img.src = item.media[0].gif.url;
+      img.alt = 'fun GIF';
+      img.className = 'rounded-lg shadow-md hover:scale-105 transition-transform duration-200';
+      img.style.maxWidth = '200px';
+      gifSection.appendChild(img);
+    });
+  })
+  .catch(() => {
+    gifSection.innerHTML = '<p class="text-pink-700 font-bold">💖 could not load GIFs, but stay cute 💖</p>';
+  });
 </script>
-
 </body>
 </html>
