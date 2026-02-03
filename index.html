@@ -1,260 +1,207 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Marie Davis — Joy in Every Moment</title>
-  <meta name="description" content="Marie Davis — mom, maker, and bringer of joy. A tiny corner of the web full of color, kindness, and everyday wins.">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/modern-css-reset/dist/reset.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Kalam&family=Dancing+Script&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
+<title>Marie Davis — Joy in Every Moment</title>
+<meta name="description" content="Marie Davis — chaotic joy, pop vibes, late-night laughs, mom energy.">
 
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E💋%3C/text%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Kalam&family=Dancing+Script&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
 
-  <style>
-    body { position: relative; overflow-x: hidden; }
-    .embed-wrap {
-      width: 100%;
-      max-width: 1200px;
-      margin: 2rem auto;
-      padding: 1.5rem;
-      border-radius: 16px;
-      background: #f8f4f9;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.25);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      overflow: hidden;
-      position: relative;
-    }
-    .embed-wrap:hover {
-      transform: scale(1.02);
-      box-shadow: 0 12px 45px rgba(0,0,0,0.35);
-    }
-    #emoji-container {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 5;
-      overflow: hidden;
-    }
-    @keyframes floatUp {
-      0% { transform: translateX(-50%) translateY(100vh) rotate(0deg); }
-      100% { transform: translateX(-50%) translateY(-50px) rotate(360deg); }
-    }
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E💋%3C/text%3E%3C/svg%3E">
+
 <style>
-@keyframes pulseGlow {
-  0% { box-shadow:0 0 30px rgba(255,105,180,.35); }
-  50% { box-shadow:0 0 60px rgba(72,255,196,.55); }
-  100% { box-shadow:0 0 30px rgba(255,105,180,.35); }
-}
+body { overflow-x:hidden; }
 
-.sparkle-layer {
-  position:absolute;
+/* Emoji Rain */
+#emoji-rain {
+  position:fixed;
   inset:0;
   pointer-events:none;
-  background-image:
-    radial-gradient(circle at 20% 30%, rgba(255,255,255,.8) 2px, transparent 3px),
-    radial-gradient(circle at 70% 60%, rgba(255,255,255,.7) 2px, transparent 3px),
-    radial-gradient(circle at 40% 80%, rgba(255,255,255,.6) 2px, transparent 3px);
-  animation: sparkleMove 6s linear infinite;
+  z-index:1;
+}
+.emoji {
+  position:absolute;
+  animation: fall linear forwards;
+}
+@keyframes fall {
+  from { transform:translateY(-10vh); opacity:1; }
+  to { transform:translateY(110vh); opacity:0; }
 }
 
-@keyframes sparkleMove {
-  0% { background-position:0 0; }
-  100% { background-position:200px 300px; }
+/* Rec0deD Card */
+@keyframes pulseGlow {
+  0% { box-shadow:0 0 25px rgba(255,105,180,.35); }
+  50% { box-shadow:0 0 60px rgba(72,255,196,.55); }
+  100% { box-shadow:0 0 25px rgba(255,105,180,.35); }
+}
+.sparkles {
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(circle at 20% 30%, #fff 2px, transparent 3px),
+    radial-gradient(circle at 80% 60%, #fff 2px, transparent 3px),
+    radial-gradient(circle at 50% 80%, #fff 2px, transparent 3px);
+  opacity:.6;
+  animation:sparkle 6s linear infinite;
+}
+@keyframes sparkle {
+  from { background-position:0 0; }
+  to { background-position:300px 400px; }
 }
 </style>
-  </style>
 </head>
-<body class="antialiased bg-gradient-to-br from-pink-200 via-rose-100 to-emerald-100 text-gray-800 min-h-screen flex flex-col">
 
-<div id="emoji-container"></div>
+<body class="bg-gradient-to-br from-pink-200 via-rose-100 to-emerald-100 text-gray-800 min-h-screen flex flex-col">
 
-<!-- Floating Cash App Button -->
-<a href="https://cash.app/$mayjayme79"
-   target="_blank"
-   rel="noopener"
-   aria-label="Tip via Cash App"
-   style="
-     position:fixed;
-     bottom:20px;
-     right:20px;
-     z-index:9999;
-     padding:14px 18px;
-     background:#00d632;
-     color:#000;
-     font-weight:800;
-     border-radius:999px;
-     text-decoration:none;
-     box-shadow:0 0 18px rgba(0,214,50,.7);
-     display:flex;
-     align-items:center;
-     gap:8px;
-     transition:transform .15s ease, box-shadow .15s ease;
-   "
-   onmouseover="this.style.transform='scale(1.07)';this.style.boxShadow='0 0 28px rgba(0,214,50,1)'"
-   onmouseout="this.style.transform='scale(1)';this.style.boxShadow='0 0 18px rgba(0,214,50,.7)'">
-  💸 Tip $mayjayme79
-</a>
+<div id="emoji-rain"></div>
 
-<header class="text-center py-6">
+<header class="text-center py-6 relative z-10">
   <h1 class="text-3xl sm:text-4xl font-extrabold text-rose-700 drop-shadow-md">
     Marie Davis — Joy in Every Moment
   </h1>
 </header>
 
-<main class="max-w-4xl mx-auto w-full px-4 sm:px-6 py-8 text-center grow">
+<main class="max-w-4xl mx-auto w-full px-6 py-8 text-center grow relative z-10">
 
-  <h2 class="text-xl sm:text-2xl font-[Kalam] text-rose-600 mb-3">
-    oops 😅 i made a website! it’s kinda cute tho 💨💅🏽
-  </h2>
+<h2 class="text-xl sm:text-2xl font-[Kalam] text-rose-600 mb-3">
+  oops 😅 i made a website! it’s kinda cute tho 💨💅🏽
+</h2>
 
-  <h3 class="text-lg sm:text-xl text-pink-700 mb-8">
-    i got distracted rollin’ up 😂💨 so check back soon, boo ✨
-  </h3>
+<h3 class="text-lg sm:text-xl text-pink-700 mb-6">
+  i got distracted rollin’ up 😂 so check back soon boo ✨
+</h3>
 
-  <h2 class="text-xl sm:text-2xl font-[Kalam] text-rose-600">
-    a lil about me 🌸
-  </h2>
+<p class="max-w-xl mx-auto leading-relaxed">
+  hey i’m marie 🩷 mixed girl from south park seattle who loves art,
+  plants, family, and random late-night laughs.
+</p>
 
-  <p class="mt-2 max-w-xl mx-auto leading-relaxed">
-    hey i’m marie 🩷 mixed girl from south park seattle who loves art, plants,
-    family, and random late-night laughs.
-  </p>
+<blockquote id="affirmation"
+  class="text-emerald-700 font-[Dancing_Script] mt-8 text-xl">
+  loading good vibes...
+</blockquote>
 
-  <blockquote id="quote" class="text-emerald-700 font-[Dancing_Script] mt-8 text-xl">
-    loading affirmations...
-  </blockquote>
-<!-- Rec0deD:88 Interactive Preview Card -->
-<a href="https://www.rec0ded88.com"
-   target="_blank"
-   rel="noopener"
-   aria-label="Visit Rec0deD:88 retro gaming site"
-   style="text-decoration:none;">
+<!-- Rec0deD Preview Card -->
+<a href="https://www.rec0ded88.com" target="_blank" rel="noopener" style="text-decoration:none;">
+<div id="rec-card"
+  style="
+    position:relative;
+    margin:3rem auto;
+    padding:1.5rem;
+    border-radius:20px;
+    background:linear-gradient(135deg,#ffd6e8,#eafff4);
+    animation:pulseGlow 4s infinite;
+    overflow:hidden;
+    max-width:900px;
+    transition:transform .25s ease;
+  "
+  onmouseover="this.style.transform='scale(1.03)'"
+  onmouseout="this.style.transform='scale(1)'">
 
-  <div id="rec88-card"
-       style="
-        position:relative;
-        max-width:900px;
-        margin:3rem auto;
-        padding:1.5rem;
-        background:linear-gradient(135deg,#ffd6e8,#eafff4);
-        border-radius:20px;
-        box-shadow:0 0 40px rgba(255,105,180,.35);
-        text-align:center;
-        overflow:hidden;
-        animation:pulseGlow 4s ease-in-out infinite;
-        transition:transform .25s ease, box-shadow .25s ease;
-       ">
+<div class="sparkles"></div>
 
-    <!-- Sparkle layer -->
-    <div class="sparkle-layer"></div>
+<img src="rec0ded88-preview.png"
+     alt="Rec0deD:88 preview"
+     style="width:100%;border-radius:14px;margin-bottom:1rem;">
 
-    <img src="rec0ded88-preview.png"
-         alt="Rec0deD:88 retro gaming preview"
-         style="
-          width:100%;
-          border-radius:14px;
-          display:block;
-          margin-bottom:1rem;
-         ">
+<p id="rec-caption" class="font-bold text-emerald-700 text-lg">
+  Retro games. Loud nostalgia. Internet chaos 🎮✨
+</p>
 
-    <p id="rec88-caption"
-       style="
-        font-size:1.15rem;
-        font-weight:800;
-        color:#047857;
-        transition:opacity .3s ease;
-       ">
-      Retro games. Loud nostalgia. Internet chaos 🎮✨
-    </p>
-
-  </div>
+</div>
 </a>
 
-<br>
-<p style="text-align:center; color:#555; font-size:14px;">Preview of the Rec0deD:88 interface (text snapshot)</p>
-  <!-- Random “stoner/ghetto mom/pop fashion” chaotic GIF Section -->
-  <div id="gif-section" class="mt-8 flex flex-wrap justify-center gap-4">
-    <p class="text-pink-700 font-bold w-full">loading messy stoner chaos GIFs... 💨</p>
-  </div>
+<!-- GIF WALL -->
+<section class="mt-12">
+  <h3 class="text-xl font-[Kalam] text-rose-600 mb-4">
+    current mood rn 💅🏽💨
+  </h3>
 
-  
+  <div id="gif-wall"
+       class="flex flex-wrap justify-center gap-4">
+    <p class="text-pink-700 font-bold">loading chaos...</p>
+  </div>
+</section>
+
 </main>
 
-<footer class="text-center text-xs py-6">
-  <p>
-    made with love, laughs & chaos 💨<br>
-    my ride-or-die, DJ 💋
-  </p>
-
-  <a id="dj-link"
-     href="https://www.djthepcdude.com"
-     target="_blank"
-     rel="noopener"
-     class="underline hover:text-emerald-500 inline-block mt-2">
-    djthepcdude.com
-  </a>
-
-  <p class="mt-3">mariedavis.net © 2025</p>
+<footer class="text-center text-xs py-6 relative z-10">
+<p>
+made with love, laughs & chaos 💨<br>
+my ride-or-die, DJ 💋
+</p>
+<p class="mt-2">mariedavis.net © 2025</p>
 </footer>
 
 <script>
-// --- Falling emojis ---
-const emojiContainer = document.getElementById('emoji-container');
-const emojis = ['💖','✨','💨','💅🏽','🩷','💚','💋','😂','🌸','💎'];
+// Emoji rain
+const emojis = ['💖','✨','💨','💅🏽','🩷','💋','😂','🌸','🎮'];
+const rain = document.getElementById('emoji-rain');
+setInterval(()=>{
+  const e=document.createElement('div');
+  e.className='emoji';
+  e.textContent=emojis[Math.floor(Math.random()*emojis.length)];
+  e.style.left=Math.random()*100+'vw';
+  e.style.fontSize=Math.random()*24+18+'px';
+  e.style.animationDuration=Math.random()*4+4+'s';
+  rain.appendChild(e);
+  setTimeout(()=>e.remove(),9000);
+},300);
 
-function createEmoji() {
-  const e = document.createElement('div');
-  e.textContent = emojis[Math.floor(Math.random()*emojis.length)];
-  e.style.position = 'absolute';
-  e.style.left = Math.random()*100 + '%';
-  e.style.fontSize = (Math.random()*28 + 16)+'px';
-  e.style.opacity = Math.random()*0.8 + 0.2;
-  emojiContainer.appendChild(e);
-  let pos = -30;
-  const speed = Math.random()*1.5 + 0.5;
-  function fall() {
-    pos += speed;
-    e.style.top = pos + 'px';
-    if(pos < window.innerHeight + 30) requestAnimationFrame(fall);
-    else e.remove();
-  }
-  fall();
-}
-setInterval(createEmoji, 300);
-
-// --- Random AI quote ---
+// Affirmation
 fetch('https://api.quotable.io/random')
-  .then(res=>res.json())
-  .then(data=>{
-    document.getElementById('quote').textContent = `✨ ${data.content} ✨`;
-  })
-  .catch(()=>{document.getElementById('quote').textContent = '💖 stay chaotic & cute 💖';});
+.then(r=>r.json())
+.then(d=>{
+  document.getElementById('affirmation').textContent='✨ '+d.content+' ✨';
+})
+.catch(()=>{
+  document.getElementById('affirmation').textContent='stay cute. stay chaotic 💖';
+});
 
-// --- Random “stoner/ghetto mom/pop fashion” GIFs via Tenor ---
-const TENOR_KEY = 'LIVDSRZULELA'; // free public key
-const gifSection = document.getElementById('gif-section');
-const gifKeywords = ['stoner','chaotic','drunk','ghetto mom','pop fashion','late night','messy','fun'];
+// Rec captions
+const captions=[
+  "Retro games. Loud nostalgia. Internet chaos 🎮✨",
+  "Old-school web energy 💻💖",
+  "CRT dreams & late-night vibes 💨",
+  "Click me. You know you want to 😎"
+];
+let i=0;
+setInterval(()=>{
+  i=(i+1)%captions.length;
+  document.getElementById('rec-caption').textContent=captions[i];
+},3500);
 
-fetch(`https://g.tenor.com/v1/random?q=${encodeURIComponent(gifKeywords.join(','))}&key=${TENOR_KEY}&limit=6`)
-  .then(res => res.json())
-  .then(data => {
-    gifSection.innerHTML = '';
-    data.results.forEach(item => {
-      const img = document.createElement('img');
-      img.src = item.media[0].gif.url;
-      img.alt = 'messy fun GIF';
-      img.className = 'rounded-2xl shadow-lg hover:scale-110 transition-transform duration-300';
-      img.style.maxWidth = '220px';
-      img.style.marginBottom = '10px';
-      gifSection.appendChild(img);
-    });
-  })
-  .catch(() => {
-    gifSection.innerHTML = '<p class="text-pink-700 font-bold">💖 chaos is still here, GIFs might be sleeping 💖</p>';
+// GIF Wall
+const gifWall=document.getElementById('gif-wall');
+const TENOR_KEY='LIVDSRZULELA';
+const vibes=[
+  'stoner vibes','makeup glow up','drunk fun',
+  'mom life funny','pop fashion','late night chaos',
+  'bad bitch energy'
+];
+
+fetch(`https://g.tenor.com/v1/random?q=${encodeURIComponent(vibes.join(','))}&key=${TENOR_KEY}&limit=6`)
+.then(r=>r.json())
+.then(d=>{
+  gifWall.innerHTML='';
+  d.results.forEach(g=>{
+    const img=document.createElement('img');
+    img.src=g.media[0].gif.url;
+    img.style.width='180px';
+    img.style.borderRadius='16px';
+    img.style.boxShadow='0 10px 25px rgba(0,0,0,.25)';
+    img.style.transition='transform .25s ease';
+    img.onmouseover=()=>img.style.transform='scale(1.08)';
+    img.onmouseout=()=>img.style.transform='scale(1)';
+    gifWall.appendChild(img);
   });
+})
+.catch(()=>{
+  gifWall.innerHTML='<p class="text-pink-700 font-bold">chaos sleeping 😴</p>';
+});
 </script>
 
 </body>
