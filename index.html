@@ -107,9 +107,63 @@ footer {
   user-select: none;
 }
 </style>
+  <body>
 </head>
+  <h2 class="text-lg sm:text-l text-pini-700 mb-6">
+    oops 😅 i made a website! it’s kinda cute tho 💨💅🏽
+</h2>
 
-<body>
+<h3 class="text-lg sm:text-xl text-pink-700 mb-6">
+  i got distracted rollin’ up 😂 so check back soon boo ✨
+</h3>
+
+<p class="max-w-xl mx-auto leading-relaxed">
+  hey i’m marie 🩷 mixed girl from south park seattle who loves art,
+  plants, family, and random late-night laughs.
+</p>
+
+<blockquote id="affirmation"
+  class="text-emerald-700 font-[Dancing_Script] mt-8 text-xl">
+  loading good vibes...
+</blockquote>
+
+<!-- Rec0deD Preview Card -->
+<a href="https://www.rec0ded88.com" target="_blank" rel="noopener" style="text-decoration:none;">
+<div id="rec-card"
+  style="
+    position:relative;
+    margin:3rem auto;
+    padding:1.5rem;
+    border-radius:20px;
+    background:linear-gradient(135deg,#ffd6e8,#eafff4);
+    animation:pulseGlow 4s infinite;
+    overflow:hidden;
+    max-width:900px;
+    transition:transform .25s ease;
+  "
+  onmouseover="this.style.transform='scale(1.03)'"
+  onmouseout="this.style.transform='scale(1)'">
+
+<div class="sparkles"></div>
+
+<img src="rec0ded88-preview.png"
+     alt="Rec0deD:88 preview"
+     style="width:100%;border-radius:14px;margin-bottom:1rem;">
+
+<p id="rec-caption" class="font-bold text-emerald-700 text-lg">
+  Retro games. Loud nostalgia. Internet chaos 🎮✨
+</p>
+
+</div>
+</a>
+
+<!-- GIF WALL -->
+<section class="mt-12">
+  <h3 class="text-xl font-[Kalam] text-rose-600 mb-4">
+    current mood rn 💅🏽💨
+  </h3>
+  
+
 
 <div class="parallax" id="parallax"></div>
 
@@ -125,11 +179,20 @@ footer {
       <span class="bless-count" id="blessCount">0</span>
     </button>
   </div>
-
+<div id="gif-wall"
+       class="flex flex-wrap justify-center gap-4">
+    <p class="text-pink-700 font-bold">loading chaos...</p>
+  </div>
+</section>
 </main>
 
-<footer id="footer">
-  made with intention ✨
+  
+<footer class="text-center text-xs py-6 relative z-10">
+ <p> made with intention </p>
+made with love, laughs & chaos 💨<br>
+my ride-or-die, DJ 💋
+</p>
+<p class="mt-2">mariedavis.net © 2025</p>
 </footer>
 
 <script>
@@ -206,79 +269,7 @@ footer.addEventListener('click', () => {
     footer.textContent = 'you found the quiet part 💫';
   }
 });
-</script>
 
-</body>
-</html>  oops 😅 i made a website! it’s kinda cute tho 💨💅🏽
-</h2>
-
-<h3 class="text-lg sm:text-xl text-pink-700 mb-6">
-  i got distracted rollin’ up 😂 so check back soon boo ✨
-</h3>
-
-<p class="max-w-xl mx-auto leading-relaxed">
-  hey i’m marie 🩷 mixed girl from south park seattle who loves art,
-  plants, family, and random late-night laughs.
-</p>
-
-<blockquote id="affirmation"
-  class="text-emerald-700 font-[Dancing_Script] mt-8 text-xl">
-  loading good vibes...
-</blockquote>
-
-<!-- Rec0deD Preview Card -->
-<a href="https://www.rec0ded88.com" target="_blank" rel="noopener" style="text-decoration:none;">
-<div id="rec-card"
-  style="
-    position:relative;
-    margin:3rem auto;
-    padding:1.5rem;
-    border-radius:20px;
-    background:linear-gradient(135deg,#ffd6e8,#eafff4);
-    animation:pulseGlow 4s infinite;
-    overflow:hidden;
-    max-width:900px;
-    transition:transform .25s ease;
-  "
-  onmouseover="this.style.transform='scale(1.03)'"
-  onmouseout="this.style.transform='scale(1)'">
-
-<div class="sparkles"></div>
-
-<img src="rec0ded88-preview.png"
-     alt="Rec0deD:88 preview"
-     style="width:100%;border-radius:14px;margin-bottom:1rem;">
-
-<p id="rec-caption" class="font-bold text-emerald-700 text-lg">
-  Retro games. Loud nostalgia. Internet chaos 🎮✨
-</p>
-
-</div>
-</a>
-
-<!-- GIF WALL -->
-<section class="mt-12">
-  <h3 class="text-xl font-[Kalam] text-rose-600 mb-4">
-    current mood rn 💅🏽💨
-  </h3>
-
-  <div id="gif-wall"
-       class="flex flex-wrap justify-center gap-4">
-    <p class="text-pink-700 font-bold">loading chaos...</p>
-  </div>
-</section>
-
-</main>
-
-<footer class="text-center text-xs py-6 relative z-10">
-<p>
-made with love, laughs & chaos 💨<br>
-my ride-or-die, DJ 💋
-</p>
-<p class="mt-2">mariedavis.net © 2025</p>
-</footer>
-
-<script>
 // Emoji rain
 const emojis = ['💖','✨','💨','💅🏽','🩷','💋','😂','🌸','🎮'];
 const rain = document.getElementById('emoji-rain');
