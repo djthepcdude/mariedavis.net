@@ -1,73 +1,215 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-
-<title>Marie Davis — Joy in Every Moment</title>
-<meta name="description" content="Marie Davis — chaotic joy, pop vibes, late-night laughs, mom energy.">
-
-<link href="https://fonts.googleapis.com/css2?family=Kalam&family=Dancing+Script&display=swap" rel="stylesheet">
-<script src="https://cdn.tailwindcss.com"></script>
-
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E💋%3C/text%3E%3C/svg%3E">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Marie Davis</title>
 
 <style>
-body { overflow-x:hidden; }
-
-/* Emoji Rain */
-#emoji-rain {
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  z-index:1;
-}
-.emoji {
-  position:absolute;
-  animation: fall linear forwards;
-}
-@keyframes fall {
-  from { transform:translateY(-10vh); opacity:1; }
-  to { transform:translateY(110vh); opacity:0; }
+:root {
+  --bg: #fff5f8;
+  --accent: #e11d48;
+  --soft: #fb7185;
+  --text: #3f3f46;
 }
 
-/* Rec0deD Card */
-@keyframes pulseGlow {
-  0% { box-shadow:0 0 25px rgba(255,105,180,.35); }
-  50% { box-shadow:0 0 60px rgba(72,255,196,.55); }
-  100% { box-shadow:0 0 25px rgba(255,105,180,.35); }
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
 }
-.sparkles {
-  position:absolute;
-  inset:0;
+
+main {
+  max-width: 900px;
+  margin: auto;
+  padding: 2rem 1.25rem 6rem;
+}
+
+/* Parallax background */
+.parallax {
+  position: fixed;
+  inset: 0;
   background:
-    radial-gradient(circle at 20% 30%, #fff 2px, transparent 3px),
-    radial-gradient(circle at 80% 60%, #fff 2px, transparent 3px),
-    radial-gradient(circle at 50% 80%, #fff 2px, transparent 3px);
-  opacity:.6;
-  animation:sparkle 6s linear infinite;
+    radial-gradient(circle at 20% 30%, rgba(225,29,72,.08), transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(251,113,133,.08), transparent 40%);
+  z-index: -1;
+  transform: translateY(0);
 }
-@keyframes sparkle {
-  from { background-position:0 0; }
-  to { background-position:300px 400px; }
+
+/* Mood card */
+.card {
+  background: white;
+  border-radius: 18px;
+  padding: 1.5rem;
+  box-shadow: 0 15px 35px rgba(0,0,0,.08);
+  margin-bottom: 2rem;
+}
+
+.mood {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+/* Compliment */
+.compliment {
+  margin-top: .75rem;
+  font-style: italic;
+  color: #6b7280;
+}
+
+/* Bless button */
+.bless {
+  margin-top: 1.25rem;
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  background: var(--accent);
+  color: white;
+  padding: .6rem 1rem;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.bless-count {
+  font-size: .85rem;
+  opacity: .85;
+}
+
+/* Floating heart */
+.heart {
+  position: fixed;
+  font-size: 20px;
+  pointer-events: none;
+  animation: floatUp 1.4s ease-out forwards;
+}
+
+@keyframes floatUp {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-120px) scale(1.4);
+  }
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  font-size: .85rem;
+  color: #6b7280;
+  margin-top: 4rem;
+  user-select: none;
 }
 </style>
 </head>
 
-<body class="bg-gradient-to-br from-pink-200 via-rose-100 to-emerald-100 text-gray-800 min-h-screen flex flex-col">
+<body>
 
-<div id="emoji-rain"></div>
+<div class="parallax" id="parallax"></div>
 
-<header class="text-center py-6 relative z-10">
-  <h1 class="text-3xl sm:text-4xl font-extrabold text-rose-700 drop-shadow-md">
-    Marie Davis — Joy in Every Moment
-  </h1>
-</header>
+<main>
 
-<main class="max-w-4xl mx-auto w-full px-6 py-8 text-center grow relative z-10">
+  <!-- Mood Check-In -->
+  <div class="card">
+    <div class="mood" id="moodText">...</div>
+    <div class="compliment" id="complimentText"></div>
 
-<h2 class="text-xl sm:text-2xl font-[Kalam] text-rose-600 mb-3">
-  oops 😅 i made a website! it’s kinda cute tho 💨💅🏽
+    <button class="bless" id="blessBtn">
+      💖 send love
+      <span class="bless-count" id="blessCount">0</span>
+    </button>
+  </div>
+
+</main>
+
+<footer id="footer">
+  made with intention ✨
+</footer>
+
+<script>
+/* =========================
+   Mood Check-In
+========================= */
+const moodText = document.getElementById('moodText');
+const hour = new Date().getHours();
+
+if (hour < 11) {
+  moodText.textContent = 'coffee first. thoughts later ☕';
+} else if (hour < 18) {
+  moodText.textContent = 'somewhere between productive & distracted 😅';
+} else {
+  moodText.textContent = 'every bad idea starts after midnight 💨';
+}
+
+/* =========================
+   Compliments
+========================= */
+const compliments = [
+  'you look good today btw',
+  'you’re not behind. you’re early.',
+  'whoever raised you did something right',
+  'you bring a calm people notice',
+  'you’re allowed to take up space'
+];
+
+const complimentText = document.getElementById('complimentText');
+complimentText.textContent =
+  compliments[Math.floor(Math.random() * compliments.length)];
+
+/* =========================
+   Tap to Bless
+========================= */
+const blessBtn = document.getElementById('blessBtn');
+const blessCountEl = document.getElementById('blessCount');
+let blessCount = Number(localStorage.getItem('blessCount')) || 0;
+blessCountEl.textContent = blessCount;
+
+blessBtn.addEventListener('click', (e) => {
+  blessCount++;
+  localStorage.setItem('blessCount', blessCount);
+  blessCountEl.textContent = blessCount;
+
+  const heart = document.createElement('div');
+  heart.className = 'heart';
+  heart.textContent = '💖';
+  heart.style.left = e.clientX + 'px';
+  heart.style.top = e.clientY + 'px';
+  document.body.appendChild(heart);
+
+  setTimeout(() => heart.remove(), 1400);
+});
+
+/* =========================
+   Soft Parallax Drift
+========================= */
+const parallax = document.getElementById('parallax');
+window.addEventListener('scroll', () => {
+  const y = window.scrollY * 0.02;
+  parallax.style.transform = `translateY(${y}px)`;
+});
+
+/* =========================
+   Easter Egg (Footer Tap)
+========================= */
+let footerTaps = 0;
+const footer = document.getElementById('footer');
+
+footer.addEventListener('click', () => {
+  footerTaps++;
+  if (footerTaps === 5) {
+    footer.textContent = 'you found the quiet part 💫';
+  }
+});
+</script>
+
+</body>
+</html>  oops 😅 i made a website! it’s kinda cute tho 💨💅🏽
 </h2>
 
 <h3 class="text-lg sm:text-xl text-pink-700 mb-6">
