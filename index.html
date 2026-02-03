@@ -4,70 +4,888 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Marie Davis</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 
 <style>
 :root {
-  --bg: #fff5f8;
-  --accent: #e11d48;
-  --soft: #fb7185;
-  --text: #3f3f46;
-  --emerald: #059669;
-  --pink: #db2777;
+  --rose-50: #fff1f2;
+  --rose-100: #ffe4e6;
+  --rose-500: #f43f5e;
+  --rose-600: #e11d48;
+  --rose-700: #be123c;
+  --emerald-600: #059669;
+  --emerald-700: #047857;
+  --slate-700: #334155;
+  --slate-800: #1e293b;
+  --slate-900: #0f172a;
+  --bg-primary: #fefcfb;
+  --bg-card: #ffffff;
+  --text-primary: #1e293b;
+  --text-muted: #64748b;
 }
 
 * {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
 
 body {
-  margin: 0;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  overflow-x: hidden;
+  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
   line-height: 1.6;
+  overflow-x: hidden;
+  position: relative;
 }
 
-/* Parallax background */
-.parallax {
+/* Animated background gradient */
+.bg-ambient {
   position: fixed;
   inset: 0;
-  background:
-    radial-gradient(circle at 20% 30%, rgba(225,29,72,.08), transparent 40%),
-    radial-gradient(circle at 80% 70%, rgba(251,113,133,.08), transparent 40%);
-  z-index: -1;
+  z-index: 0;
+  background: 
+    radial-gradient(ellipse 80% 50% at 10% 20%, rgba(244, 63, 94, 0.03), transparent),
+    radial-gradient(ellipse 60% 60% at 90% 80%, rgba(5, 150, 105, 0.02), transparent);
+  animation: ambientPulse 20s ease-in-out infinite;
 }
 
-/* Emoji rain */
-.emoji-rain {
+@keyframes ambientPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+/* Floating particles */
+.particles {
   position: fixed;
   inset: 0;
+  z-index: 1;
   pointer-events: none;
-  z-index: 9999;
   overflow: hidden;
 }
 
-.emoji {
+.particle {
   position: absolute;
-  top: -50px;
-  animation: fall linear forwards;
-  pointer-events: none;
+  width: 4px;
+  height: 4px;
+  background: rgba(244, 63, 94, 0.15);
+  border-radius: 50%;
+  animation: float linear infinite;
 }
 
-@keyframes fall {
-  to {
-    top: 100vh;
-    transform: rotate(360deg);
+@keyframes float {
+  0% {
+    transform: translateY(100vh) translateX(0) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.3;
+  }
+  90% {
+    opacity: 0.3;
+  }
+  100% {
+    transform: translateY(-10vh) translateX(50px) rotate(360deg);
+    opacity: 0;
   }
 }
 
 /* Container */
-main {
-  max-width: 900px;
-  margin: auto;
-  padding: 2rem 1.25rem 3rem;
+.container {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
   position: relative;
-  z-index: 1;
+  z-index: 2;
+}
+
+/* Header */
+header {
+  text-align: center;
+  margin-bottom: 4rem;
+  animation: fadeInDown 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.site-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-weight: 700;
+  color: var(--rose-600);
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  user-select: none;
+}
+
+.site-title::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--rose-500), var(--emerald-600));
+  transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.site-title:hover::after {
+  width: 100%;
+}
+
+.subtitle {
+  font-size: 1.125rem;
+  color: var(--text-muted);
+  font-weight: 400;
+  margin-bottom: 0.5rem;
+  animation: fadeIn 1s ease-out 0.3s both;
+}
+
+.bio {
+  font-size: 1.0625rem;
+  color: var(--text-primary);
+  max-width: 540px;
+  margin: 2rem auto 0;
+  line-height: 1.8;
+  animation: fadeIn 1s ease-out 0.6s both;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Card styling */
+.card {
+  background: var(--bg-card);
+  border-radius: 24px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 
+    0 1px 3px rgba(0, 0, 0, 0.04),
+    0 10px 40px rgba(0, 0, 0, 0.03);
+  border: 1px solid rgba(244, 63, 94, 0.06);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+  position: relative;
+  overflow: hidden;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--rose-500), var(--emerald-600));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card:hover::before {
+  transform: scaleX(1);
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 
+    0 4px 12px rgba(0, 0, 0, 0.05),
+    0 20px 60px rgba(0, 0, 0, 0.06);
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Mood Check-In */
+.mood-check {
+  animation-delay: 0.1s;
+}
+
+.mood-label {
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+
+.mood-text {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+  line-height: 1.4;
+}
+
+.compliment {
+  font-style: italic;
+  color: var(--emerald-700);
+  font-size: 1.0625rem;
+  margin-bottom: 1.5rem;
+  opacity: 0;
+  animation: fadeIn 0.8s ease-out 1s both;
+}
+
+/* Bless button */
+.bless-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  background: linear-gradient(135deg, var(--rose-500), var(--rose-600));
+  color: white;
+  padding: 0.875rem 1.75rem;
+  border-radius: 999px;
+  border: none;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 12px rgba(244, 63, 94, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.bless-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.bless-btn:hover::before {
+  opacity: 1;
+}
+
+.bless-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(244, 63, 94, 0.3);
+}
+
+.bless-btn:active {
+  transform: translateY(0);
+}
+
+.bless-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.25);
+  padding: 0.25rem 0.625rem;
+  border-radius: 999px;
+  font-size: 0.875rem;
+  min-width: 28px;
+}
+
+/* Floating heart animation */
+.heart-float {
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  font-size: 1.5rem;
+  animation: heartFloat 1.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes heartFloat {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1) rotate(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-140px) scale(1.5) rotate(20deg);
+  }
+}
+
+/* Affirmation card */
+.affirmation-card {
+  animation-delay: 0.2s;
+  background: linear-gradient(135deg, rgba(5, 150, 105, 0.03), rgba(244, 63, 94, 0.03));
+  border-color: rgba(5, 150, 105, 0.1);
+}
+
+.affirmation-text {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.375rem;
+  line-height: 1.6;
+  color: var(--emerald-700);
+  font-style: italic;
+  text-align: center;
+  position: relative;
+}
+
+.affirmation-text::before,
+.affirmation-text::after {
+  content: '✨';
+  position: absolute;
+  opacity: 0.6;
+  font-size: 1.125rem;
+}
+
+.affirmation-text::before {
+  left: -2rem;
+  top: 0;
+}
+
+.affirmation-text::after {
+  right: -2rem;
+  bottom: 0;
+}
+
+/* Rec0deD card */
+.rec-card {
+  animation-delay: 0.3s;
+  background: linear-gradient(135deg, #ffd6e8 0%, #eafff4 100%);
+  border: none;
+  text-decoration: none;
+  display: block;
+  position: relative;
+  overflow: hidden;
+}
+
+.rec-card::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(135deg, var(--rose-500), var(--emerald-600));
+  border-radius: 24px;
+  opacity: 0;
+  z-index: -1;
+  transition: opacity 0.4s ease;
+}
+
+.rec-card:hover::after {
+  opacity: 0.1;
+}
+
+.rec-preview {
+  width: 100%;
+  border-radius: 16px;
+  margin-bottom: 1.25rem;
+  display: block;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.rec-caption {
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: var(--emerald-700);
+  text-align: center;
+  transition: color 0.3s ease;
+}
+
+.rec-card:hover .rec-caption {
+  color: var(--rose-600);
+}
+
+/* GIF section */
+.gif-section {
+  animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.4s both;
+}
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: var(--rose-600);
+  margin-bottom: 1.5rem;
+}
+
+.gif-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.gif-item {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+}
+
+.gif-item:hover {
+  transform: scale(1.05) rotate(1deg);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+}
+
+.gif-loading {
+  text-align: center;
+  color: var(--text-muted);
+  font-style: italic;
+  padding: 2rem;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 3rem 1.5rem 2rem;
+  color: var(--text-muted);
+  font-size: 0.9375rem;
+  margin-top: 4rem;
+  position: relative;
+  z-index: 2;
+  cursor: pointer;
+  user-select: none;
+  transition: color 0.3s ease;
+}
+
+footer:hover {
+  color: var(--rose-600);
+}
+
+.footer-content {
+  line-height: 1.8;
+}
+
+.footer-easter-egg {
+  display: none;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  color: var(--rose-600);
+  margin-top: 1rem;
+  animation: fadeIn 0.6s ease-out;
+}
+
+.footer-easter-egg.active {
+  display: block;
+}
+
+/* Glitter burst effect */
+.glitter {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  background: var(--rose-500);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 10000;
+  animation: glitterBurst 1s ease-out forwards;
+}
+
+@keyframes glitterBurst {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--tx), var(--ty)) scale(0);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .container {
+    padding: 2rem 1.25rem;
+  }
+  
+  .site-title {
+    font-size: 2.5rem;
+  }
+  
+  .card {
+    padding: 1.5rem;
+  }
+  
+  .gif-grid {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 0.75rem;
+  }
+  
+  .gif-item {
+    height: 140px;
+  }
+  
+  .affirmation-text::before,
+  .affirmation-text::after {
+    display: none;
+  }
+}
+
+/* Loading state */
+.loading {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* Smooth transitions on load */
+.no-transition {
+  transition: none !important;
+  animation: none !important;
+}
+</style>
+</head>
+<body>
+
+<!-- Animated background -->
+<div class="bg-ambient"></div>
+
+<!-- Floating particles -->
+<div class="particles" id="particles"></div>
+
+<div class="container">
+  <!-- Header -->
+  <header>
+    <h1 class="site-title" id="siteTitle">Marie Davis</h1>
+    <p class="subtitle">oops 😅 i made a website! it's kinda cute tho 💨💅🏽</p>
+    <p class="subtitle">i got distracted rollin' up 😂 so check back soon boo ✨</p>
+    <p class="bio">
+      hey i'm marie 🩷 mixed girl from south park seattle who loves art,
+      plants, family, and random late-night laughs.
+    </p>
+  </header>
+
+  <!-- Affirmation -->
+  <div class="card affirmation-card">
+    <p class="affirmation-text" id="affirmation">loading good vibes...</p>
+  </div>
+
+  <!-- Mood Check-In -->
+  <div class="card mood-check">
+    <div class="mood-label">Right Now</div>
+    <div class="mood-text" id="moodText"></div>
+    <div class="compliment" id="compliment"></div>
+    <button class="bless-btn" id="blessBtn">
+      💖 send love
+      <span class="bless-count" id="blessCount">0</span>
+    </button>
+  </div>
+
+  <!-- Rec0deD Card -->
+  <a href="https://www.rec0ded88.com" target="_blank" rel="noopener" class="card rec-card">
+    <img 
+      src="/rec0ded88-preview.png" 
+      alt="Rec0deD:88 - Retro gaming website" 
+      class="rec-preview"
+      onerror="this.style.display='none'">
+    <p class="rec-caption" id="recCaption">
+      Retro games. Loud nostalgia. Internet chaos 🎮✨
+    </p>
+  </a>
+
+  <!-- GIF Wall -->
+  <section class="gif-section">
+    <h2 class="section-title">current mood rn 💅🏽💨</h2>
+    <div class="gif-grid" id="gifGrid">
+      <p class="gif-loading">loading chaos...</p>
+    </div>
+  </section>
+</div>
+
+<!-- Footer -->
+<footer id="footer">
+  <div class="footer-content">
+    <p>made with intention<br>
+    made with love, laughs & chaos 💨<br>
+    my ride-or-die, DJ 💋</p>
+    <p style="margin-top: 1rem; opacity: 0.7;">mariedavis.net © 2025</p>
+  </div>
+  <div class="footer-easter-egg" id="footerEasterEgg">
+    you found the quiet part 💫
+  </div>
+</footer>
+
+<script>
+// ===========================
+// INITIALIZATION
+// ===========================
+
+// Prevent flash of unstyled content
+document.body.classList.add('no-transition');
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.body.classList.remove('no-transition');
+  }, 100);
+});
+
+// ===========================
+// FLOATING PARTICLES
+// ===========================
+
+const particlesContainer = document.getElementById('particles');
+
+function createParticle() {
+  const particle = document.createElement('div');
+  particle.className = 'particle';
+  particle.style.left = Math.random() * 100 + 'vw';
+  particle.style.animationDuration = (Math.random() * 15 + 15) + 's';
+  particle.style.animationDelay = Math.random() * 5 + 's';
+  particlesContainer.appendChild(particle);
+  
+  setTimeout(() => {
+    particle.remove();
+  }, 20000);
+}
+
+// Create initial particles
+for (let i = 0; i < 8; i++) {
+  createParticle();
+}
+
+// Continuously add particles
+setInterval(createParticle, 4000);
+
+// ===========================
+// PARALLAX SCROLL EFFECT
+// ===========================
+
+const bgAmbient = document.querySelector('.bg-ambient');
+let ticking = false;
+
+window.addEventListener('scroll', () => {
+  if (!ticking) {
+    window.requestAnimationFrame(() => {
+      const scrollY = window.scrollY;
+      bgAmbient.style.transform = `translateY(${scrollY * 0.015}px)`;
+      ticking = false;
+    });
+    ticking = true;
+  }
+});
+
+// ===========================
+// MOOD CHECK-IN
+// ===========================
+
+const moodText = document.getElementById('moodText');
+const hour = new Date().getHours();
+
+if (hour >= 5 && hour < 11) {
+  moodText.textContent = 'coffee first. thoughts later ☕';
+} else if (hour >= 11 && hour < 18) {
+  moodText.textContent = 'somewhere between productive & distracted 😅';
+} else {
+  moodText.textContent = 'every bad idea starts after midnight 💨';
+}
+
+// ===========================
+// RANDOM COMPLIMENT
+// ===========================
+
+const compliments = [
+  'you look good today btw',
+  'you\'re not behind. you\'re early.',
+  'whoever raised you did something right',
+  'you bring a calm people notice',
+  'you\'re allowed to take up space'
+];
+
+const complimentEl = document.getElementById('compliment');
+const randomCompliment = compliments[Math.floor(Math.random() * compliments.length)];
+complimentEl.textContent = randomCompliment;
+
+// ===========================
+// TAP TO BLESS
+// ===========================
+
+const blessBtn = document.getElementById('blessBtn');
+const blessCountEl = document.getElementById('blessCount');
+
+// Load count from localStorage
+let blessCount = parseInt(localStorage.getItem('marieBlesses')) || 0;
+blessCountEl.textContent = blessCount;
+
+blessBtn.addEventListener('click', (e) => {
+  // Increment and save
+  blessCount++;
+  localStorage.setItem('marieBlesses', blessCount);
+  blessCountEl.textContent = blessCount;
+  
+  // Create floating heart
+  const heart = document.createElement('div');
+  heart.className = 'heart-float';
+  heart.textContent = '💖';
+  heart.style.left = e.clientX + 'px';
+  heart.style.top = e.clientY + 'px';
+  document.body.appendChild(heart);
+  
+  setTimeout(() => heart.remove(), 1600);
+  
+  // Button pulse effect
+  blessBtn.style.transform = 'scale(0.95)';
+  setTimeout(() => {
+    blessBtn.style.transform = '';
+  }, 100);
+});
+
+// ===========================
+// AFFIRMATION API
+// ===========================
+
+const affirmationEl = document.getElementById('affirmation');
+
+fetch('https://api.quotable.io/random?maxLength=100')
+  .then(response => response.json())
+  .then(data => {
+    affirmationEl.textContent = data.content;
+  })
+  .catch(() => {
+    affirmationEl.textContent = 'stay cute. stay chaotic 💖';
+  });
+
+// ===========================
+// REC0DED ROTATING CAPTIONS
+// ===========================
+
+const recCaptions = [
+  'Retro games. Loud nostalgia. Internet chaos 🎮✨',
+  'Old-school web energy 💻💖',
+  'CRT dreams & late-night vibes 💨',
+  'Click me. You know you want to 😎'
+];
+
+let captionIndex = 0;
+const recCaptionEl = document.getElementById('recCaption');
+
+setInterval(() => {
+  captionIndex = (captionIndex + 1) % recCaptions.length;
+  recCaptionEl.style.opacity = '0';
+  
+  setTimeout(() => {
+    recCaptionEl.textContent = recCaptions[captionIndex];
+    recCaptionEl.style.opacity = '1';
+  }, 200);
+}, 3500);
+
+recCaptionEl.style.transition = 'opacity 0.2s ease';
+
+// ===========================
+// GIF WALL (TENOR API)
+// ===========================
+
+const gifGrid = document.getElementById('gifGrid');
+const TENOR_KEY = 'AIzaSyAyimkuYQYF_FXVALexPuGQctUWRURdCYQ';
+
+const vibes = [
+  'stoner vibes',
+  'makeup glow up',
+  'drunk fun',
+  'mom life funny',
+  'pop fashion',
+  'late night chaos',
+  'bad bitch energy'
+];
+
+const randomVibe = vibes[Math.floor(Math.random() * vibes.length)];
+
+fetch(`https://tenor.googleapis.com/v2/search?q=${encodeURIComponent(randomVibe)}&key=${TENOR_KEY}&limit=6&media_filter=gif`)
+  .then(response => response.json())
+  .then(data => {
+    gifGrid.innerHTML = '';
+    
+    if (data.results && data.results.length > 0) {
+      data.results.forEach((gif, index) => {
+        const img = document.createElement('img');
+        img.src = gif.media_formats.gif.url;
+        img.alt = 'vibe gif';
+        img.className = 'gif-item';
+        img.style.animationDelay = `${0.5 + index * 0.1}s`;
+        img.style.animation = 'fadeIn 0.6s ease-out backwards';
+        gifGrid.appendChild(img);
+      });
+    } else {
+      gifGrid.innerHTML = '<p class="gif-loading">chaos sleeping 😴</p>';
+    }
+  })
+  .catch(error => {
+    console.error('GIF fetch error:', error);
+    gifGrid.innerHTML = '<p class="gif-loading">chaos sleeping 😴</p>';
+  });
+
+// ===========================
+// FOOTER EASTER EGG
+// ===========================
+
+const footer = document.getElementById('footer');
+const footerEasterEgg = document.getElementById('footerEasterEgg');
+let footerTaps = 0;
+
+footer.addEventListener('click', () => {
+  footerTaps++;
+  
+  if (footerTaps === 5) {
+    footerEasterEgg.classList.add('active');
+    footer.querySelector('.footer-content').style.opacity = '0.4';
+  }
+});
+
+// ===========================
+// TITLE GLITTER BURST
+// ===========================
+
+const siteTitle = document.getElementById('siteTitle');
+let pressTimer;
+
+function createGlitter(x, y) {
+  for (let i = 0; i < 12; i++) {
+    const glitter = document.createElement('div');
+    glitter.className = 'glitter';
+    
+    const angle = (Math.PI * 2 * i) / 12;
+    const distance = 60 + Math.random() * 40;
+    const tx = Math.cos(angle) * distance;
+    const ty = Math.sin(angle) * distance;
+    
+    glitter.style.setProperty('--tx', tx + 'px');
+    glitter.style.setProperty('--ty', ty + 'px');
+    glitter.style.left = x + 'px';
+    glitter.style.top = y + 'px';
+    glitter.style.animationDelay = (i * 0.03) + 's';
+    
+    // Random colors
+    const colors = ['var(--rose-500)', 'var(--emerald-600)', '#ffd700'];
+    glitter.style.background = colors[Math.floor(Math.random() * colors.length)];
+    
+    document.body.appendChild(glitter);
+    
+    setTimeout(() => glitter.remove(), 1000);
+  }
+}
+
+// Desktop: Long press
+siteTitle.addEventListener('mousedown', (e) => {
+  pressTimer = setTimeout(() => {
+    const rect = siteTitle.getBoundingClientRect();
+    const x = rect.left + rect.width / 2;
+    const y = rect.top + rect.height / 2;
+    createGlitter(x, y);
+  }, 500);
+});
+
+siteTitle.ad  z-index: 1;
 }
 
 /* Header */
