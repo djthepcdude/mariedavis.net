@@ -30,72 +30,44 @@
   <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Base favicon -->
+  <!-- Favicon -->
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E💋%3C/text%3E%3C/svg%3E">
 
-  <!-- Matrix + embed + game styles -->
+  <!-- Embed styles -->
   <style>
-    #matrixFx {
-      position: fixed;
-      inset: 0;
-      display: none;
-      z-index: 40;
-      pointer-events: none;
+    .embed-wrap {
+      width: 100%;
+      max-width: 1200px;
+      margin: 2rem auto;
+      padding: 1.5rem;
+      border-radius: 16px;
+      background: #f8f4f9;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.25);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      position: relative;
+      overflow: hidden;
     }
-
-    /* Main embed container */
-.embed-wrap {
-  width: 100%;
-  max-width: 1200px;       /* caps width on desktop */
-  margin: 2rem auto;       /* center horizontally */
-  padding: 1.5rem;         /* inner spacing */
-  border-radius: 16px;     /* smooth rounded corners */
-  background: #f8f4f9;     /* subtle background */
-  box-shadow:
-    0 10px 40px rgba(0,0,0,0.25),
-    inset 0 0 0 1px rgba(0,0,0,0.03);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-/* Hover / interactive effect */
-.embed-wrap:hover {
-  transform: scale(1.02);
-  box-shadow:
-    0 12px 45px rgba(0,0,0,0.35),
-    inset 0 0 0 1px rgba(0,0,0,0.05);
-}
-
-/* Embedded media (image, video, or content) */
-.embed-wrap > * {
-  width: 100%;
-  height: auto;             /* maintain aspect ratio */
-  border-radius: 12px;      /* match container corners */
-  display: block;
-}
-
-/* Example text inside embed */
-.embed-wrap p, 
-.embed-wrap h2, 
-.embed-wrap h3 {
-  margin: 0.5rem 0;
-  line-height: 1.5;
-  text-align: center;
-}
-
-/* Mobile adjustments */
-@media (max-width: 768px) {
-  .embed-wrap {
-    padding: 1rem;
-    border-radius: 12px;
-  }
-}
+    .embed-wrap:hover {
+      transform: scale(1.02);
+      box-shadow: 0 12px 45px rgba(0,0,0,0.35);
+    }
+    .embed-wrap iframe {
+      width: 100%;
+      height: 600px;
+      border: none;
+      border-radius: 16px;
+    }
     @media (max-width: 768px) {
-      .embed-wrap iframe { height: 70vh; }
+      .embed-wrap iframe { height: 400px; }
+      .embed-wrap { padding: 1rem; border-radius: 12px; }
     }
   </style>
 </head>
 
 <body class="antialiased bg-gradient-to-br from-pink-200 via-rose-100 to-emerald-100 text-gray-800 min-h-screen flex flex-col">
+
+<!-- Full-site falling emojis -->
+<div id="full-emoji-container" style="position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:5;"></div>
 
 <!-- Floating Cash App Button -->
 <a href="https://cash.app/$mayjayme79"
@@ -153,14 +125,21 @@
     “be kind, stay high, and love loud 💚”
   </blockquote>
 
-<div class="embed-wrap flex items-center justify-center">
-  <a href="https://REC0DDED88-URL-HERE"
-     target="_blank"
-     rel="noopener"
-     class="text-lg font-bold text-emerald-500 hover:underline">
-    Tap to open 💖
-  </a>
-</div>
+  <!-- Rec0deD:88 Embed + Cash App inside embed-wrap -->
+  <div class="embed-wrap flex flex-col items-center justify-center">
+    <iframe 
+      src="https://www.rec0ded88.com" 
+      loading="lazy"
+      title="Rec0deD:88 Embedded">
+    </iframe>
+
+    <a href="https://cash.app/$mayjayme79"
+       target="_blank"
+       rel="noopener"
+       style="display:inline-block;margin-top:16px;padding:12px 24px;background:#00d632;color:#000;font-weight:800;border-radius:999px;text-decoration:none;box-shadow:0 0 18px rgba(0,214,50,.7);">
+      💸 Tip $mayjayme79
+    </a>
+  </div>
 
 </main>
 
@@ -185,8 +164,41 @@
 
 <canvas id="matrixFx" aria-hidden="true"></canvas>
 
-<!-- Matrix hover script untouched (works fine) -->
-<!-- keep your existing matrix JS here -->
+<!-- Full-site falling emojis script -->
+<script>
+const emojiContainer = document.getElementById('full-emoji-container');
+const emojis = ['💖','✨','💨','💅🏽','🩷','💚','💋','😂','🌸','💎'];
+
+function createEmoji() {
+  const emoji = document.createElement('div');
+  emoji.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+  emoji.style.position = 'absolute';
+  emoji.style.left = Math.random()*100 + '%';
+  emoji.style.fontSize = (Math.random()*28 + 16)+'px';
+  emoji.style.opacity = Math.random()*0.8 + 0.2;
+  emoji.style.zIndex = 5; // behind main content
+  emojiContainer.appendChild(emoji);
+
+  let top = -30;
+  const speed = Math.random()*2 + 1;
+  const drift = (Math.random()-0.5)*1.5;
+
+  function fall(){
+    top += speed;
+    emoji.style.top = top + 'px';
+    emoji.style.left = (parseFloat(emoji.style.left) + drift) + '%';
+    if(top < emojiContainer.offsetHeight + 30){
+      requestAnimationFrame(fall);
+    } else {
+      emoji.remove();
+    }
+  }
+  fall();
+}
+
+// spawn an emoji every 200ms for full-site effect
+setInterval(createEmoji, 200);
+</script>
 
 </body>
 </html>
