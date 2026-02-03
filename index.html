@@ -42,6 +42,29 @@
       0% { transform: translateX(-50%) translateY(100vh) rotate(0deg); }
       100% { transform: translateX(-50%) translateY(-50px) rotate(360deg); }
     }
+<style>
+@keyframes pulseGlow {
+  0% { box-shadow:0 0 30px rgba(255,105,180,.35); }
+  50% { box-shadow:0 0 60px rgba(72,255,196,.55); }
+  100% { box-shadow:0 0 30px rgba(255,105,180,.35); }
+}
+
+.sparkle-layer {
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(255,255,255,.8) 2px, transparent 3px),
+    radial-gradient(circle at 70% 60%, rgba(255,255,255,.7) 2px, transparent 3px),
+    radial-gradient(circle at 40% 80%, rgba(255,255,255,.6) 2px, transparent 3px);
+  animation: sparkleMove 6s linear infinite;
+}
+
+@keyframes sparkleMove {
+  0% { background-position:0 0; }
+  100% { background-position:200px 300px; }
+}
+</style>
   </style>
 </head>
 <body class="antialiased bg-gradient-to-br from-pink-200 via-rose-100 to-emerald-100 text-gray-800 min-h-screen flex flex-col">
